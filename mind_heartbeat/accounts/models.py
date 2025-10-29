@@ -12,9 +12,9 @@ from uuid import uuid4
 class UserManager(BaseUserManager):
     def create_user(self, username, password, **extra_fields):
         if not username:
-            raise ValueError(_("The Username field must be set."))
+            raise ValueError(_("ユーザー名は必須です。"))
         if not password:
-            raise ValueError(_("The Password field must be set."))
+            raise ValueError(_("パスワードは必須です。"))
 
         user = self.model(username=username, **extra_fields)
         user.set_password(password)
@@ -26,9 +26,11 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
 
         if extra_fields.get("is_staff") is not True:
-            raise ValueError(_("Superuser must have is_staff=True."))
+            raise ValueError(_("管理者ユーザーは is_staff=True である必要があります。"))
         if extra_fields.get("is_superuser") is not True:
-            raise ValueError(_("Superuser must have is_superuser=True."))
+            raise ValueError(
+                _("管理者ユーザーは is_superuser=True である必要があります。")
+            )
 
         return self.create_user(username, password, **extra_fields)
 
@@ -39,19 +41,19 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=150,
         unique=True,
         help_text=_(
-            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+            "ユーザー名は必須です。150文字以内。英字、数字、@/./+/-/_ のみ使用可能です。"
         ),
         validators=[
             RegexValidator(
                 regex=r"^[\w.@+-]+$",
                 message=_(
-                    "Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters."
+                    "有効なユーザー名を入力してください。この値には英字、数字、@/./+/-/_ 文字のみを含めることができます。"
                 ),
             )
         ],
         error_messages={
-            "unique": _("A user with that username already exists."),
-            "blank": _("This field cannot be blank."),
+            "unique": _("そのユーザー名は既に存在します。"),
+            "blank": _("このフィールドは必須です。"),
         },
     )
     nickname = models.CharField(
@@ -59,6 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     objects = UserManager()
