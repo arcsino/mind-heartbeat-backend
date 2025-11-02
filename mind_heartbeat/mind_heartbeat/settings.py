@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Local apps
     "accounts.apps.AccountsConfig",
+    "stamps.apps.StampsConfig",
     # Third-party apps
     "rest_framework",
     "corsheaders",
@@ -171,7 +172,7 @@ LOGGING = {
             "handlers": ["console"],
             "level": "DEBUG",
         },
-        "quizzes": {
+        "stamps": {
             "handlers": ["console"],
             "level": "DEBUG",
         },

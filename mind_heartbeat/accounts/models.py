@@ -10,6 +10,8 @@ from uuid import uuid4
 
 
 class UserManager(BaseUserManager):
+    """Custom user manager for User model."""
+
     def create_user(self, username, password, **extra_fields):
         if not username:
             raise ValueError(_("ユーザー名は必須です。"))
@@ -36,8 +38,11 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """Custom user model."""
+
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     username = models.CharField(
+        verbose_name=_("ユーザー名"),
         max_length=150,
         unique=True,
         help_text=_(
@@ -57,7 +62,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         },
     )
     nickname = models.CharField(
-        max_length=30, unique=True, default=f"匿名{uuid4().hex[:12]}"
+        verbose_name=_("ニックネーム"),
+        max_length=30,
+        unique=True,
+        default=f"匿名{uuid4().hex[:12]}",
     )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -68,6 +76,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = []
+
+    class Meta:
+        verbose_name = _("ユーザー")
+        verbose_name_plural = _("ユーザ一一覧")
 
     def __str__(self):
         return self.username
