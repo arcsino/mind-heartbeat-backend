@@ -1,7 +1,8 @@
+from uuid import uuid4
+
+from accounts.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from accounts.models import User
-from uuid import uuid4
 
 
 class Stamp(models.Model):

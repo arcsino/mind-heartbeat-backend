@@ -1,14 +1,14 @@
 from django.urls import path
-from .views import (
-    UserRegistrationAPIView,
-    LoginAPIView,
-    UserDetailAPIView,
-    UserUpdateAPIView,
-    PasswordChangeAPIView,
-    LogoutAPIView,
-    UserDeleteAPIView,
-)
 
+from .views import (
+    LoginAPIView,
+    LogoutAPIView,
+    PasswordChangeAPIView,
+    UserDeleteAPIView,
+    UserDetailAPIView,
+    UserRegistrationAPIView,
+    UserUpdateAPIView,
+)
 
 urlpatterns = [
     # Any user can access.

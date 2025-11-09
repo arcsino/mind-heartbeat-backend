@@ -1,14 +1,15 @@
-from rest_framework import generics, status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .serializers import (
-    UserRegistrationSerializer,
     LoginSerializer,
+    PasswordChangeSerializer,
+    UserRegistrationSerializer,
     UserSerializer,
     UserUpdateSerializer,
-    PasswordChangeSerializer,
 )
 
 
